@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-forest-50 via-white to-sky-50 min-h-screen;
+  }
+}
+
+@layer components {
+  .agent-card {
+    @apply bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden;
+  }
+  
+  .agent-card:hover {
+    @apply transform -translate-y-1;
+  }
+  
+  .chat-bubble-user {
+    @apply bg-forest-600 text-white rounded-2xl rounded-br-md px-4 py-3 max-w-[80%] ml-auto;
+  }
+  
+  .chat-bubble-agent {
+    @apply bg-white text-gray-800 rounded-2xl rounded-bl-md px-4 py-3 max-w-[80%] shadow-md border border-gray-100;
+  }
+  
+  .btn-primary {
+    @apply bg-forest-600 hover:bg-forest-700 text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl active:scale-95;
+  }
+  
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-50 text-forest-700 font-medium px-6 py-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg border border-forest-200;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-forest-500 focus:ring-2 focus:ring-forest-200 outline-none transition-all duration-200;
+  }
+  
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/20;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400;
+}
+
+/* Leaflet map adjustments */
+.leaflet-container {
+  @apply rounded-xl;
+}
+
+/* Markdown content styling */
+.markdown-content h1 {
+  @apply text-2xl font-bold text-gray-900 mb-4;
+}
+
+.markdown-content h2 {
+  @apply text-xl font-semibold text-gray-800 mb-3 mt-6;
+}
+
+.markdown-content h3 {
+  @apply text-lg font-medium text-gray-700 mb-2 mt-4;
+}
+
+.markdown-content p {
+  @apply text-gray-600 mb-4 leading-relaxed;
+}
+
+.markdown-content ul {
+  @apply list-disc list-inside mb-4 space-y-2;
+}
+
+.markdown-content ol {
+  @apply list-decimal list-inside mb-4 space-y-2;
+}
+
+.markdown-content li {
+  @apply text-gray-600;
+}
+
+.markdown-content code {
+  @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono text-forest-700;
+}
+
+.markdown-content pre {
+  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0 text-gray-100;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-forest-500 pl-4 italic text-gray-600 my-4;
+}
+
+.markdown-content table {
+  @apply w-full border-collapse mb-4;
+}
+
+.markdown-content th {
+  @apply bg-gray-100 border border-gray-200 px-4 py-2 text-left font-semibold;
+}
+
+.markdown-content td {
+  @apply border border-gray-200 px-4 py-2;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+/* Loading dots animation */
+.loading-dots::after {
+  content: '';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: ''; }
+  40% { content: '.'; }
+  60% { content: '..'; }
+  80%, 100% { content: '...'; }
+}

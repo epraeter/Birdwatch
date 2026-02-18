@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Drop shadow -->
+  <ellipse cx="32" cy="60" rx="12" ry="4" fill="rgba(0,0,0,0.2)"/>
+  
+  <!-- Pin body -->
+  <path d="M32 58 C32 58 12 36 12 24 C12 12.95 20.95 4 32 4 C43.05 4 52 12.95 52 24 C52 36 32 58 32 58Z" fill="#ef4444"/>
+  <path d="M32 58 C32 58 12 36 12 24 C12 12.95 20.95 4 32 4 C43.05 4 52 12.95 52 24 C52 36 32 58 32 58Z" stroke="#b91c1c" stroke-width="2" fill="none"/>
+  
+  <!-- Inner circle (white background) -->
+  <circle cx="32" cy="24" r="16" fill="white"/>
+  
+  <!-- Bird silhouette -->
+  <g transform="translate(18, 12) scale(0.55)">
+    <!-- Bird body -->
+    <path d="M28 30 C20 30 14 26 10 22 L2 24 L8 20 C6 18 5 15 6 12 C8 8 14 6 20 8 C22 4 26 2 30 2 C36 2 40 6 42 10 L50 8 L44 14 C46 18 46 22 44 26 C42 30 36 34 30 34 C29 34 28 32 28 30Z" fill="#1e3a5f"/>
+    <!-- Eye -->
+    <circle cx="34" cy="12" r="3" fill="white"/>
+    <circle cx="35" cy="11" r="1.5" fill="#1e3a5f"/>
+    <!-- Beak -->
+    <path d="M42 10 L52 8 L44 14 Z" fill="#f59e0b"/>
+    <!-- Wing detail -->
+    <path d="M20 18 Q28 14 36 20" stroke="#3b5998" stroke-width="2" fill="none"/>
+  </g>
+</svg>

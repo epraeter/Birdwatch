@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Drop shadow -->
+  <ellipse cx="32" cy="60" rx="12" ry="4" fill="rgba(0,0,0,0.2)"/>
+  
+  <!-- Pin body -->
+  <path d="M32 58 C32 58 12 36 12 24 C12 12.95 20.95 4 32 4 C43.05 4 52 12.95 52 24 C52 36 32 58 32 58Z" fill="#16a34a"/>
+  <path d="M32 58 C32 58 12 36 12 24 C12 12.95 20.95 4 32 4 C43.05 4 52 12.95 52 24 C52 36 32 58 32 58Z" stroke="#15803d" stroke-width="2" fill="none"/>
+  
+  <!-- Inner circle (white background) -->
+  <circle cx="32" cy="24" r="14" fill="white"/>
+  
+  <!-- Binoculars icon -->
+  <g transform="translate(22, 14)">
+    <!-- Left lens -->
+    <circle cx="5" cy="10" r="5" fill="#16a34a"/>
+    <circle cx="5" cy="10" r="3" fill="#bbf7d0"/>
+    <!-- Right lens -->
+    <circle cx="15" cy="10" r="5" fill="#16a34a"/>
+    <circle cx="15" cy="10" r="3" fill="#bbf7d0"/>
+    <!-- Bridge -->
+    <rect x="8" y="8" width="4" height="4" rx="1" fill="#16a34a"/>
+    <!-- Eyepieces -->
+    <rect x="2" y="0" width="6" height="4" rx="1" fill="#16a34a"/>
+    <rect x="12" y="0" width="6" height="4" rx="1" fill="#16a34a"/>
+  </g>
+</svg>
