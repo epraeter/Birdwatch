@@ -18,11 +18,17 @@ export type AgentType =
   | 'lifelist'
   | 'team'
 
+export interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
+
 export interface ChatRequest {
   message: string
   agent_type?: AgentType
   session_id?: string
   context?: Record<string, unknown>
+  history?: ChatMessage[]
 }
 
 export interface ChatResponse {
@@ -154,9 +160,7 @@ export const logSighting = async (sighting: SightingLog) => {
 }
 
 export const summarizeTrip = async (notes: string) => {
-  const response = await api.post('/journal/summarize', notes, {
-    headers: { 'Content-Type': 'text/plain' },
-  })
+  const response = await api.post('/journal/summarize', { notes })
   return response.data
 }
 

@@ -10,7 +10,7 @@ A comprehensive birding web application powered by **Agno** multi-agent AI frame
 
 2. **Behavior Interpreter Agent** - Explains bird behaviors (feeding, mating displays, migration timing), predicts what might happen next during encounters.
 
-3. **Location Scout Agent** - Studies eBird data, weather patterns, and seasonal trends to recommend where and when to find target species. Creates personalized birding routes based on your skill level.
+3. **Location Scout Agent** - Studies eBird data, weather patterns, and seasonal trends to recommend where and when to find target species. Creates personalized birding routes; returns locations as Google Maps links in chat.
 
 4. **Journal Agent** - Automatically logs sightings, generates narrative summaries of birding sessions, tracks your life list, and helps spot patterns in observations.
 
@@ -50,6 +50,9 @@ A comprehensive birding web application powered by **Agno** multi-agent AI frame
 
 - **Team coordinator** - Default chat routes to the right specialist automatically
 - **Direct agent chat** - Chat with a specific agent (e.g., `/chat/migration`, `/chat/lifelist`) for focused assistance
+- **Your location** - Chat receives your location when available (Geolocation or IP fallback) so it can answer “where” questions without asking
+- **Conversation memory** - Full message history is sent with each message so the agent remembers your original question when you answer follow-ups (e.g. after you provide your location)
+- **Location links** - When the agent returns places or hotspots, it uses Google Maps links instead of raw coordinates
 
 ## Tech Stack
 
@@ -157,7 +160,7 @@ npm run dev
 
 ### Journal
 - `POST /api/journal/log` - Log a sighting
-- `POST /api/journal/summarize` - Generate trip summary
+- `POST /api/journal/summarize` - Generate trip summary (body: `{"notes": "..."}`)
 
 ### Learning
 - `GET /api/learn/quiz` - Get quiz question

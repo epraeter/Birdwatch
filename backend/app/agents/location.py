@@ -59,6 +59,11 @@ def create_location_scout_agent() -> Agent:
             "2. Provide directions to chase rare birds if requested",
             "3. Note reliability of sightings and refind difficulty",
             "",
+            "**Formatting locations:**",
+            "When listing hotspots or places with coordinates, do NOT show raw latitude/longitude.",
+            "Instead, give each location a clickable Google Maps link: https://www.google.com/maps?q=LAT,LNG (use the actual coordinates in the URL).",
+            "Example: [Aaron Smith Nature Preserve](https://www.google.com/maps?q=41.1115,-81.8063)",
+            "",
             "Always prioritize bird welfare - don't recommend approaches that would disturb nesting or roosting birds.",
             "Include practical info: parking, trails, permits needed, best time of day."
         ],

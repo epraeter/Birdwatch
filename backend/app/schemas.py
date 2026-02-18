@@ -50,6 +50,10 @@ class ChatRequest(BaseModel):
         None,
         description="Additional context (location, preferences, etc.)"
     )
+    history: Optional[List[ChatMessage]] = Field(
+        None,
+        description="Previous messages in this conversation (so the agent remembers the original question)"
+    )
 
 
 class ChatResponse(BaseModel):

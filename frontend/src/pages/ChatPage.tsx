@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import { PaperAirplaneIcon, SparklesIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/solid'
-import { useChatStore, type Message } from '../store/chatStore'
 import { chat, type AgentType } from '../lib/api'
+import { useUserLocation } from '../hooks/useUserLocation'
 import clsx from 'clsx'
+import type { Message } from '../store/chatStore'
 
 const agentInfo: Record<string, { name: string; description: string; color: string }> = {
   team: {
@@ -57,14 +58,27 @@ const agentInfo: Record<string, { name: string; description: string; color: stri
 
 export default function ChatPage() {
   const { agentType = 'team' } = useParams<{ agentType: string }>()
+  const { getLocation: getUserLocation } = useUserLocation()
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [sessionId, setSessionId] = useState<string>()
+  const [userLocation, setUserLocation] = useState<{ locationName: string; lat: number; lng: number } | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const agent = agentInfo[agentType] || agentInfo.team
+
+  // Fetch user location once on mount so chat can use it
+  useEffect(() => {
+    let cancelled = false
+    getUserLocation().then((result) => {
+      if (!cancelled && result) {
+        setUserLocation({ locationName: result.locationName, lat: result.lat, lng: result.lng })
+      }
+    })
+    return () => { cancelled = true }
+  }, [getUserLocation])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -98,10 +112,19 @@ export default function ChatPage() {
     setIsLoading(true)
 
     try {
+      const context: Record<string, unknown> = {}
+      if (userLocation) {
+        context['User location'] = userLocation.locationName
+        context['latitude'] = userLocation.lat
+        context['longitude'] = userLocation.lng
+      }
+      const history = messages.map((m) => ({ role: m.role, content: m.content }))
       const response = await chat({
         message: userMessage.content,
         agent_type: agentType as AgentType,
         session_id: sessionId,
+        context: Object.keys(context).length > 0 ? context : undefined,
+        history: history.length > 0 ? history : undefined,
       })
 
       setSessionId(response.session_id)
@@ -333,6 +356,9 @@ export default function ChatPage() {
             </button>
           </div>
           <p className="text-xs text-gray-400 text-center mt-3">
+            {userLocation ? (
+              <>Using your location: <span className="text-forest-600 font-medium">{userLocation.locationName}</span> · </>
+            ) : null}
             Press Enter to send, Shift+Enter for new line
           </p>
         </form>

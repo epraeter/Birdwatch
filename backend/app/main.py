@@ -148,11 +148,19 @@ async def chat(request: ChatRequest):
         agent = get_agent(request.agent_type)
         session_id = request.session_id or str(uuid.uuid4())
         
-        # Build the message with context if provided
-        message = request.message
+        # Build the message with context and conversation history
+        parts = []
         if request.context:
             context_str = "\n".join([f"{k}: {v}" for k, v in request.context.items()])
-            message = f"Context:\n{context_str}\n\nUser message: {message}"
+            parts.append(f"Context (use this when relevant):\n{context_str}")
+        if request.history and len(request.history) > 0:
+            history_lines = []
+            for m in request.history:
+                role = "User" if m.role == "user" else "Assistant"
+                history_lines.append(f"{role}: {m.content}")
+            parts.append("Previous conversation:\n" + "\n".join(history_lines))
+        parts.append("Current user message: " + request.message)
+        message = "\n\n".join(parts)
         
         # Run the agent
         response = agent.run(message)
@@ -192,10 +200,15 @@ async def chat_stream(request: ChatRequest):
         try:
             agent = get_agent(request.agent_type)
             
-            message = request.message
+            parts = []
             if request.context:
                 context_str = "\n".join([f"{k}: {v}" for k, v in request.context.items()])
-                message = f"Context:\n{context_str}\n\nUser message: {message}"
+                parts.append(f"Context (use this when relevant):\n{context_str}")
+            if request.history and len(request.history) > 0:
+                history_lines = [f"{('User' if m.role == 'user' else 'Assistant')}: {m.content}" for m in request.history]
+                parts.append("Previous conversation:\n" + "\n".join(history_lines))
+            parts.append("Current user message: " + request.message)
+            message = "\n\n".join(parts)
             
             # Stream the response
             for chunk in agent.run(message, stream=True):
@@ -569,7 +582,7 @@ Please confirm the logging and provide any additional information about this spe
 
 
 @app.post("/api/journal/summarize")
-async def summarize_trip(notes: str):
+async def summarize_trip(notes: str = Body(embed=True)):
     """
     Generate a narrative summary of a birding trip.
     """
